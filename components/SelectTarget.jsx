@@ -35,6 +35,7 @@ const data = [
 export default function DrawerDemo() {
   const [goal, setGoal] = useState(5);
   const [value, submitedVal] = useState();
+  const [open, SetItOpen] = useState(false);
 
   function onClick(adjustment) {
     setGoal(Math.max(0, Math.min(180, goal + adjustment)));
@@ -42,10 +43,12 @@ export default function DrawerDemo() {
 
   function SubmitGoal() {
     submitedVal(goal);
+    SetItOpen(false);
   }
 
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={SetItOpen}>
+      <div className="px-2 my-2 ">{value}/min</div>
       <DrawerTrigger asChild>
         <Button variant="outline">Open Drawer</Button>
       </DrawerTrigger>
@@ -102,9 +105,7 @@ export default function DrawerDemo() {
           </div>
           <DrawerFooter>
             <Button onClick={SubmitGoal}>Submit</Button>
-            <button onClick={SubmitGoal} onSubmit={SubmitGoal}>
-              SUBMIT
-            </button>
+            <button onSubmit={SubmitGoal}>SUBMIT</button>
             <DrawerClose asChild>
               <Button variant="outline">Cancel</Button>
             </DrawerClose>
