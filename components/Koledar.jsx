@@ -1,5 +1,5 @@
 "use client";
-import { DateRangePicker } from "@/components//ui/buttoncalendar";
+import { DateRangePicker } from "@/components//ui/calendar";
 
 export default function Kolendar() {
   return (
