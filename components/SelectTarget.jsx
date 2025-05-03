@@ -105,7 +105,7 @@ export default function DrawerDemo() {
           </div>
           <DrawerFooter>
             <Button onClick={SubmitGoal}>Submit</Button>
-            <button onSubmit={SubmitGoal}>SUBMIT</button>
+
             <DrawerClose asChild>
               <Button variant="outline">Cancel</Button>
             </DrawerClose>
