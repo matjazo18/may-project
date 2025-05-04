@@ -49,16 +49,30 @@ export default function DrawerDemo({ stvar, setTime }) {
   return (
     <Drawer open={open} onOpenChange={SetItOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">Open Drawer</Button>
+        <Button variant="outline">How much time ?</Button>
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
             <DrawerTitle>Move Goal</DrawerTitle>
             <DrawerDescription>
-              {stvar
-                ? `How much time per day do you want to spent ${stvar}`
-                : "Select Goal"}
+              {stvar ? (
+                <>
+                  <div className="font-semibold hover:scale-105 transition-transform duration-200">
+                    How much time per day do you want to spend
+                    <span className="font-extrabold text-gray-900 animate-pulse">
+                      {` ${stvar}`}
+                    </span>
+                    ?
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="text-xl font-extrabold animate-bounce">
+                    Select Goal
+                  </div>
+                </>
+              )}
             </DrawerDescription>
           </DrawerHeader>
           <div className="p-4 pb-0">

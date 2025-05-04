@@ -29,6 +29,9 @@ module.exports = {
           hover: "#00e187",
         },
       },
+      textShadow: {
+        sm: "0 1px 2px rgba(0, 0, 0, 0.1)",
+      },
       animation: {
         float: "float 3s ease-in-out infinite",
       },
