@@ -32,7 +32,7 @@ const data = [
   { goal: 349 },
 ];
 
-export default function DrawerDemo() {
+export default function DrawerDemo({ stvar, setTime }) {
   const [goal, setGoal] = useState(5);
   const [value, submitedVal] = useState();
   const [open, SetItOpen] = useState(false);
@@ -42,13 +42,12 @@ export default function DrawerDemo() {
   }
 
   function SubmitGoal() {
-    submitedVal(goal);
+    setTime(goal);
     SetItOpen(false);
   }
 
   return (
     <Drawer open={open} onOpenChange={SetItOpen}>
-      <div className="px-2 my-2 ">{value}/min</div>
       <DrawerTrigger asChild>
         <Button variant="outline">Open Drawer</Button>
       </DrawerTrigger>
@@ -56,7 +55,9 @@ export default function DrawerDemo() {
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
             <DrawerTitle>Move Goal</DrawerTitle>
-            <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+            <DrawerDescription>{`How much time per day do you want to spent ${
+              stvar ? stvar : "doing aboslute noto"
+            }`}</DrawerDescription>
           </DrawerHeader>
           <div className="p-4 pb-0">
             <div className="flex items-center justify-center space-x-2">
