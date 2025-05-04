@@ -29,7 +29,7 @@ export default function All() {
       </div>
       <div>
         {datum && stvar && time ? (
-          <div className="mt-6 p-4 border rounded-lg shadow-sm space-y-4">
+          <div className="mt-6 p-4 border rounded-lg shadow-sm space-y-4 mb-40">
             {/* Header */}
             <div className="flex items-center gap-2">
               <svg

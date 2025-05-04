@@ -6,7 +6,7 @@ import All from "@/components/All";
 export default function Home() {
   return (
     <div className="container mx-auto">
-      <div className="mt-20">
+      <div className="">
         <All />
       </div>
     </div>

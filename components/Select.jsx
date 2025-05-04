@@ -24,16 +24,16 @@ export default function SelectDemo({ setStvar }) {
         <div>
           <Select onValueChange={(value) => setStvar(value)}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select an Item" />
+              <SelectValue placeholder="Select a Goal" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value="exercise">exercise</SelectItem>
-                <SelectItem value="reading">reading</SelectItem>
-                <SelectItem value="meditating">meditating</SelectItem>
-                <SelectItem value="noSocialMedia">study</SelectItem>
-                <SelectItem value="new language">
-                  Practicing a new language
+                <SelectItem value="Exercising">Exercising</SelectItem>
+                <SelectItem value="Reading">Reading</SelectItem>
+                <SelectItem value="Meditating">Meditating</SelectItem>
+                <SelectItem value="Studying">Studying</SelectItem>
+                <SelectItem value="Learning new language ">
+                  Learning new language
                 </SelectItem>
               </SelectGroup>
             </SelectContent>

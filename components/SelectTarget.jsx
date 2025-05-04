@@ -55,9 +55,11 @@ export default function DrawerDemo({ stvar, setTime }) {
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
             <DrawerTitle>Move Goal</DrawerTitle>
-            <DrawerDescription>{`How much time per day do you want to spent ${
-              stvar ? stvar : "doing aboslute noto"
-            }`}</DrawerDescription>
+            <DrawerDescription>
+              {stvar
+                ? `How much time per day do you want to spent ${stvar}`
+                : "Select Goal"}
+            </DrawerDescription>
           </DrawerHeader>
           <div className="p-4 pb-0">
             <div className="flex items-center justify-center space-x-2">
