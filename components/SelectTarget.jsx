@@ -57,21 +57,17 @@ export default function DrawerDemo({ stvar, setTime }) {
             <DrawerTitle>Move Goal</DrawerTitle>
             <DrawerDescription>
               {stvar ? (
-                <>
-                  <div className="font-semibold hover:scale-105 transition-transform duration-200">
-                    How much time per day do you want to spend
-                    <span className="font-extrabold text-gray-900 ">
-                      {` ${stvar}`}
-                    </span>
-                    ?
-                  </div>
-                </>
+                <p className="font-semibold hover:scale-105 transition-transform duration-200">
+                  How much time per day do you want to spend
+                  <span className="font-extrabold text-gray-900 ">
+                    {` ${stvar}`}
+                  </span>
+                  ?
+                </p>
               ) : (
-                <>
-                  <div className="text-xl font-extrabold animate-bounce">
-                    Select Goal
-                  </div>
-                </>
+                <p className="text-xl font-extrabold animate-bounce">
+                  Select Goal
+                </p>
               )}
             </DrawerDescription>
           </DrawerHeader>
