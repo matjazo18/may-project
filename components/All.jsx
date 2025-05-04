@@ -23,7 +23,7 @@ export default function All() {
           <DateRangePicker setDatum={setDatum} />
         </div>
         for
-        <div>
+        <div className="mb-20 xl:mb-0">
           <DrawerDemo setTime={setTime} stvar={stvar} />
         </div>
       </div>
