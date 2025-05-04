@@ -52,8 +52,8 @@ export default function All() {
       </div>
       <div>
         {datum && stvar && time ? (
-          <div className="p-4 border rounded-lg shadow-sm mb-6 max-w-[600px] mx-auto">
-            <div className="flex flex-row justify-between items-center gap-6">
+          <div className="p-4 border py-14 rounded-lg shadow-sm mb-6 max-w-[600px] mx-auto">
+            <div className="flex flex-row justify-evenly items-center gap-6">
               {/* LEFT COLUMN: Commitment Details */}
               <div className="flex flex-col space-y-4">
                 <div className="flex items-center gap-2">
