@@ -60,7 +60,7 @@ export default function DrawerDemo({ stvar, setTime }) {
                 <>
                   <div className="font-semibold hover:scale-105 transition-transform duration-200">
                     How much time per day do you want to spend
-                    <span className="font-extrabold text-gray-900 animate-pulse">
+                    <span className="font-extrabold text-gray-900 ">
                       {` ${stvar}`}
                     </span>
                     ?
