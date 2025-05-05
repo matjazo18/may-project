@@ -9,19 +9,26 @@ import Link from "next/link";
 import icon from "@/public/icon.png";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
+import { resolve } from "styled-jsx/css";
+import toast from "react-hot-toast";
 
 export default function All() {
   const [datum, setDatum] = useState({ from: null, to: null });
   const [stvar, setStvar] = useState();
   const [time, setTime] = useState();
 
-  const router = useRouter();
-  const handleClick = useCallback(() => {
+  const handleClick = async () => {
     const timestamp = Date.now();
-    router.push(
-      `/share/${timestamp}?activity=${stvar}&time=${time}&from=${datum.from}&to=${datum.to}`
-    );
-  }, [router, stvar, time, datum]);
+    const link = `${window.location.origin}/share/${timestamp}?activity=${stvar}&time=${time}&from=${datum.from}&to=${datum.to}`;
+
+    try {
+      const sharableLink = await navigator.clipboard.writeText(link);
+      toast.success("Coppied");
+      console.log(sharableLink, "OTHER LINK");
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <>
@@ -145,6 +152,7 @@ export default function All() {
                     className="bg-gray-800 py-2 px-4 rounded-lg text-white flex items-center gap-2 hover:scale-105 transition-transform text-sm"
                     onClick={handleClick}
                   >
+                    Copy & <br />
                     Share it
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
