@@ -8,6 +8,14 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
+
+export const metadata = {
+  title: "Challange Yourself",
+  description: "Cool way to challange yourself",
+  icons: {
+    icon: "/favicon.ico",
+  },
+};
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
