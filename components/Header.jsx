@@ -27,7 +27,7 @@ export default function Header() {
             {/* Added leading-tight */}
             Challen<span className="relative text-gray-700">g</span>e Yourself{" "}
             {/* Wrapped g in span */}
-            <span className="text-yellow-500">.</span>
+            <span className="text-yellow-500 text-6xl">.</span>
           </h3>
         </div>
 

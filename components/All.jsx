@@ -7,11 +7,21 @@ import SelectDemo from "./Select";
 import DrawerDemo from "./SelectTarget";
 import Link from "next/link";
 import icon from "@/public/icon.png";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 
 export default function All() {
   const [datum, setDatum] = useState({ from: null, to: null });
   const [stvar, setStvar] = useState();
   const [time, setTime] = useState();
+
+  const router = useRouter();
+  const handleClick = useCallback(() => {
+    const timestamp = Date.now();
+    router.push(
+      `/share/${timestamp}?activity=${stvar}&time=${time}&from=${datum.from}&to=${datum.to}`
+    );
+  }, [router, stvar, time, datum]);
 
   return (
     <>
@@ -131,7 +141,10 @@ export default function All() {
                   />
                 </div>
                 <div>
-                  <button className="bg-gray-800 py-2 px-4 rounded-lg text-white flex items-center gap-2 hover:scale-105 transition-transform text-sm">
+                  <button
+                    className="bg-gray-800 py-2 px-4 rounded-lg text-white flex items-center gap-2 hover:scale-105 transition-transform text-sm"
+                    onClick={handleClick}
+                  >
                     Share it
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
