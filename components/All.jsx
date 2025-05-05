@@ -69,7 +69,7 @@ export default function All() {
       </div>
       <div>
         {datum && stvar && time ? (
-          <div className="p-4 border py-14 rounded-lg shadow-sm mb-6 max-w-[600px] mx-auto">
+          <div className="p-4 border py-8 xl:py-14 rounded-lg shadow-sm mb-6 max-w-[600px] mx-auto">
             <div className="flex flex-row justify-evenly items-center gap-6">
               {/* LEFT COLUMN: Commitment Details */}
               <div className="flex flex-col space-y-4">
@@ -152,16 +152,7 @@ export default function All() {
                     className="bg-gray-800 py-2 px-4 rounded-lg text-white flex items-center gap-2 hover:scale-105 transition-transform text-sm"
                     onClick={handleClick}
                   >
-                    Copy & <br />
-                    Share it
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                      className="h-4 w-4"
-                    >
-                      <path d="M8.25 3.75H19.5a.75.75 0 0 1 .75.75v11.25a.75.75 0 0 1-1.5 0V6.31L5.03 20.03a.75.75 0 0 1-1.06-1.06L17.69 5.25H8.25a.75.75 0 0 1 0-1.5Z" />
-                    </svg>
+                    Copy & Share it
                   </button>
                 </div>
               </div>
