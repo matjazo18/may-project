@@ -11,11 +11,13 @@ import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import { resolve } from "styled-jsx/css";
 import toast from "react-hot-toast";
+import SharedLinks from "./Shared-links";
 
 export default function All() {
   const [datum, setDatum] = useState({ from: null, to: null });
   const [stvar, setStvar] = useState();
   const [time, setTime] = useState();
+  const [isLInk, setLink] = useState();
 
   const handleClick = async () => {
     const timestamp = Date.now();
@@ -23,6 +25,7 @@ export default function All() {
     console.log(fromParam);
     const toParam = encodeURIComponent(datum.to.toISOString());
     const link = `${window.location.origin}/share/${timestamp}?activity=${stvar}&time=${time}&from=${fromParam}&to=${toParam}`;
+    setLink(link);
 
     try {
       const sharableLink = await navigator.clipboard.writeText(link);
@@ -158,6 +161,7 @@ export default function All() {
                     Copy & Share it
                   </button>
                 </div>
+                <SharedLinks link={isLInk} />;
               </div>
             </div>
           </div>
