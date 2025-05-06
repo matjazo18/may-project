@@ -19,7 +19,10 @@ export default function All() {
 
   const handleClick = async () => {
     const timestamp = Date.now();
-    const link = `${window.location.origin}/share/${timestamp}?activity=${stvar}&time=${time}&from=${datum.from}&to=${datum.to}`;
+    const fromParam = encodeURIComponent(datum.from.toISOString());
+    console.log(fromParam);
+    const toParam = encodeURIComponent(datum.to.toISOString());
+    const link = `${window.location.origin}/share/${timestamp}?activity=${stvar}&time=${time}&from=${fromParam}&to=${toParam}`;
 
     try {
       const sharableLink = await navigator.clipboard.writeText(link);
