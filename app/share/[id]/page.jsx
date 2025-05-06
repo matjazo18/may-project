@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import icon from "@/public/icon.png";
+import { Progress } from "@radix-ui/react-progress";
+import ProgresBar from "@/components/ProgresBar";
 
 export default function SharedPage({ searchParams }) {
   const { activity, time, from, to } = searchParams;
@@ -11,6 +13,9 @@ export default function SharedPage({ searchParams }) {
 
   const fromDate = new Date(from);
   const toDate = new Date(to);
+  const days = toDate - fromDate;
+  const finalDays = days / (1000 * 60 * 60 * 24);
+  console.log(finalDays);
 
   if (isNaN(fromDate) || isNaN(toDate)) {
     return notFound();
@@ -18,6 +23,7 @@ export default function SharedPage({ searchParams }) {
 
   return (
     <div className="p-4 border py-8 xl:py-14 rounded-lg shadow-sm mb-6 max-w-[600px] mx-auto">
+      <ProgresBar finalDays={finalDays} />
       <div className="flex flex-col xl:flex-row justify-evenly items-center gap-6">
         {/* LEFT COLUMN */}
         <div className="flex flex-col space-y-4 text-left">

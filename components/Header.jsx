@@ -22,12 +22,14 @@ export default function Header() {
 
         {/* Text container with proper line-height */}
         <div className="text-center">
-          <h3 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent leading-tight">
+          <h3 className="text-5xl  font-extrabold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent leading-tight flex flex-col">
             {" "}
             {/* Added leading-tight */}
-            Challen<span className="relative text-gray-700">g</span>e Yourself{" "}
+            <span>Challenge</span>
+            <span>
+              Yourself <span className="text-yellow-500 text-6xl">.</span>
+            </span>{" "}
             {/* Wrapped g in span */}
-            <span className="text-yellow-500 text-6xl">.</span>
           </h3>
         </div>
 

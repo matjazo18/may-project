@@ -12,6 +12,7 @@ import { useCallback } from "react";
 import { resolve } from "styled-jsx/css";
 import toast from "react-hot-toast";
 import SharedLinks from "./Shared-links";
+import Header from "./Header";
 
 export default function All() {
   const [datum, setDatum] = useState({ from: null, to: null });
@@ -38,6 +39,7 @@ export default function All() {
 
   return (
     <>
+      <Header />
       <div className="flex flex-col xl:flex-row items-center justify-center gap-6">
         {" "}
         I will be
@@ -158,10 +160,9 @@ export default function All() {
                     className="bg-gray-800 py-2 px-4 rounded-lg text-white flex items-center gap-2 hover:scale-105 transition-transform text-sm"
                     onClick={handleClick}
                   >
-                    Copy & Share it
+                    Copy & Share
                   </button>
                 </div>
-                <SharedLinks link={isLInk} />;
               </div>
             </div>
           </div>
