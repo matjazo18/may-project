@@ -93,11 +93,7 @@ export default async function SharedPage({ searchParams }) {
         </div>
       </div>
       <div className="flex flex-col justify-center items-center mt-10">
-        <span className="">Progress bar</span>
-        <span className="mb-2">Day 1 of {finalDays} Days</span>
-        <div className="flex gap-6 items-center">
-          <ProgresBar finalDays={finalDays} />
-        </div>
+        <ProgresBar finalDays={finalDays} />
       </div>
     </div>
   );
