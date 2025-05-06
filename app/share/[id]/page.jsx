@@ -23,7 +23,7 @@ export default async function SharedPage({ searchParams }) {
 
   return (
     <div className="p-4 border py-8 xl:py-14 rounded-lg shadow-sm mb-6 max-w-[600px] mx-auto">
-      <div className="flex  justify-evenly items-center gap-6 ">
+      <div className="flex  justify-between items-center gap-6 ">
         {/* LEFT COLUMN */}
         <div className="flex flex-col space-y-4 text-left  ">
           <div className="flex items-center gap-2">
@@ -79,8 +79,8 @@ export default async function SharedPage({ searchParams }) {
         </div>
 
         {/* RIGHT COLUMN */}
-        <div className="flex flex-col items-center justify-center text-center space-y-4 ">
-          <h3 className="text-2xl md:text-4xl font-extrabold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent leading-tight">
+        <div className="flex flex-col items-center justify-center text-center space-y-4 sm:mr-20  mr-5">
+          <h3 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent leading-tight">
             <div className="flex flex-col">
               <span className="text-gray-500">Challenge</span>
               <span className="text-gray-500">
