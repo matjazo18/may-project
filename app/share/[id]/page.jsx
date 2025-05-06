@@ -23,9 +23,9 @@ export default async function SharedPage({ searchParams }) {
 
   return (
     <div className="p-4 border py-8 xl:py-14 rounded-lg shadow-sm mb-6 max-w-[600px] mx-auto">
-      <div className="flex flex-col xl:flex-row justify-evenly items-center gap-6 ">
+      <div className="flex  justify-evenly items-center gap-6 ">
         {/* LEFT COLUMN */}
-        <div className="flex flex-col space-y-4 text-left order-2 xl:order-1">
+        <div className="flex flex-col space-y-4 text-left  ">
           <div className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@ export default async function SharedPage({ searchParams }) {
         </div>
 
         {/* RIGHT COLUMN */}
-        <div className="flex flex-col items-center justify-center text-center space-y-4 order-1 xl:order-2">
+        <div className="flex flex-col items-center justify-center text-center space-y-4 ">
           <h3 className="text-2xl md:text-4xl font-extrabold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent leading-tight">
             <div className="flex flex-col">
               <span className="text-gray-500">Challenge</span>

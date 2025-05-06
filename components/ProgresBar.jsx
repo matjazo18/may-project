@@ -35,7 +35,7 @@ export default function ProgresBar({ finalDays }) {
           </div>
         </div>
         <div className="flex gap-6 items-center">
-          <Progress value={result} className="min-w-[300px]"></Progress>
+          <Progress value={result} className="min-w-[250px]"></Progress>
 
           <div>
             <svg
