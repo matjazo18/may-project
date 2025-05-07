@@ -9,7 +9,7 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAVwpLJSKQEtYCbrpbba1QmlC4gwJXZhfo",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "challangeyourself-97960.firebaseapp.com",
   projectId: "challangeyourself-97960",
   storageBucket: "challangeyourself-97960.firebasestorage.app",
@@ -18,7 +18,7 @@ const firebaseConfig = {
   measurementId: "G-1WZZVZ8WQ2",
 };
 
-// Initialize Firebase
+// Initialize Firebase dd
 // Initialize only on the client
 let app;
 let analytics;
