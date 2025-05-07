@@ -13,25 +13,30 @@ import { resolve } from "styled-jsx/css";
 import toast from "react-hot-toast";
 import SharedLinks from "./Shared-links";
 import Header from "./Header";
+import LoginButton from "./LoginButton";
+import { useAuth } from "../app/context/AuthContext";
 
 export default function All() {
   const [datum, setDatum] = useState({ from: null, to: null });
   const [stvar, setStvar] = useState();
   const [time, setTime] = useState();
   const [isLInk, setLink] = useState();
+  const { user, loading } = useAuth();
 
   const handleClick = async () => {
+    if (typeof window === "undefined") return;
+
     const timestamp = Date.now();
     const fromParam = encodeURIComponent(datum.from.toISOString());
-    console.log(fromParam);
     const toParam = encodeURIComponent(datum.to.toISOString());
-    const link = `${window.location.origin}/share/${timestamp}?activity=${stvar}&time=${time}&from=${fromParam}&to=${toParam}`;
+    let link = "";
+
+    link = `${window.location.origin}/share/${timestamp}?activity=${stvar}&time=${time}&from=${fromParam}&to=${toParam}`;
     setLink(link);
 
     try {
-      const sharableLink = await navigator.clipboard.writeText(link);
-      toast.success("Coppied");
-      console.log(sharableLink, "OTHER LINK");
+      await navigator.clipboard.writeText(link);
+      toast.success("Copied");
     } catch (e) {
       console.log(e);
     }
@@ -40,6 +45,7 @@ export default function All() {
   return (
     <>
       <Header />
+
       <div className="flex flex-col xl:flex-row items-center justify-center gap-6">
         {" "}
         I will be
@@ -53,7 +59,12 @@ export default function All() {
         for
         <div className="mb-20 xl:mb-0">
           <DrawerDemo setTime={setTime} stvar={stvar} />
-          {datum && stvar && time ? (
+          {datum && stvar && time && !loading && !user ? (
+            <div className="mt-8">
+              <LoginButton />
+            </div>
+          ) : null}
+          {datum && stvar && time && user ? (
             <div className="flex justify-center items-center mt-20 xl:hidden ">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -70,13 +81,11 @@ export default function All() {
                 />
               </svg>
             </div>
-          ) : (
-            <></>
-          )}
+          ) : null}
         </div>
       </div>
       <div>
-        {datum && stvar && time ? (
+        {datum && stvar && time && user ? (
           <div className="p-4 border py-8 xl:py-14 rounded-lg shadow-sm mb-6 max-w-[600px] mx-auto">
             <div className="flex flex-row justify-evenly items-center gap-6">
               {/* LEFT COLUMN: Commitment Details */}
