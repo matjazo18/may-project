@@ -38,20 +38,21 @@ export default function AuthPage() {
   return (
     <>
       <Header />
-      <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <h2 className="text-2xl font-bold mb-4">
+      <div className="flex flex-col items-center justify-center mt-10">
+        <h2 className="text-3xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400">
           {isRegister ? "Register" : "Sign In"}
         </h2>
+
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-2 w-80 max-w-full"
+          className="flex flex-col gap-4 w-80 max-w-full p-6 rounded-xl shadow-lg border border-gray-100"
         >
           <input
             type="email"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border px-2 py-1 rounded"
+            className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400"
             required
           />
           <input
@@ -59,13 +60,13 @@ export default function AuthPage() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border px-2 py-1 rounded"
+            className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
             required
           />
-          {error && <div className="text-red-600 text-xs">{error}</div>}
+          {error && <div className="text-red-500 text-sm">{error}</div>}
           <button
             type="submit"
-            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+            className="bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 text-white font-semibold py-2 rounded-md hover:opacity-90 transition-opacity"
             disabled={loading}
           >
             {loading
@@ -77,10 +78,11 @@ export default function AuthPage() {
               : "Sign In"}
           </button>
         </form>
+
         <button
           type="button"
           onClick={() => setIsRegister((v) => !v)}
-          className="text-xs underline text-blue-700 mt-3"
+          className="text-sm text-pink-600 mt-4 underline hover:text-orange-500 transition-colors"
         >
           {isRegister
             ? "Already have an account? Sign In"
