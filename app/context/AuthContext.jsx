@@ -15,7 +15,11 @@ export const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         // Check if user document exists in Firestore
+
         const userDoc = await getDoc(doc(db, "users", user.uid));
+
+        console.log(user.uid);
+        console.log("TESTING");
 
         if (!userDoc.exists()) {
           // Create new user document if it doesn't exist
@@ -24,6 +28,7 @@ export const AuthProvider = ({ children }) => {
             displayName: user.displayName,
             photoURL: user.photoURL,
             createdAt: new Date().toISOString(),
+            challanges: user.challanges,
           });
         }
       }

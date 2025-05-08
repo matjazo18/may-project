@@ -1,25 +1,81 @@
+"use client";
+import { use, useEffect, useState } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import icon from "@/public/icon.png";
 import { Progress } from "@radix-ui/react-progress";
 import ProgresBar from "@/components/ProgresBar";
+import { db } from "@/lib/firebase";
+import {
+  doc,
+  getDoc,
+  collectionGroup,
+  query,
+  where,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 
-export default async function SharedPage({ searchParams }) {
-  const { activity, time, from, to } = await searchParams;
+export default function SharedPage({ params }) {
+  const { id } = use(params);
+  const [challenge, setChallenge] = useState(null);
+  const [progress, setProgress] = useState(0);
+  const [finalDays, setFinalDays] = useState(1);
+  const [challengeDocPath, setChallengeDocPath] = useState(null);
 
-  if (!activity || !time || !from || !to) {
-    return notFound();
-  }
+  // Fetch challenge by shareId
+  useEffect(() => {
+    async function fetchChallenge() {
+      const q = query(
+        collectionGroup(db, "challenges"),
+        where("shareId", "==", id)
+      );
+      const querySnapshot = await getDocs(q);
+      if (!querySnapshot.empty) {
+        const docSnap = querySnapshot.docs[0];
+        const data = docSnap.data();
+        setChallenge(data);
+        setProgress(data.progress?.daysCompleted || 0);
+        setChallengeDocPath(docSnap.ref.path);
 
-  const fromDate = new Date(from);
-  const toDate = new Date(to);
-  const days = toDate - fromDate;
-  const finalDays = days / (1000 * 60 * 60 * 24);
-  console.log(finalDays);
+        // Calculate finalDays
+        const fromDate =
+          data.from && typeof data.from.toDate === "function"
+            ? data.from.toDate()
+            : new Date(data.from);
+        const toDate =
+          data.to && typeof data.to.toDate === "function"
+            ? data.to.toDate()
+            : new Date(data.to);
+        const days = (toDate - fromDate) / (1000 * 60 * 60 * 24);
+        setFinalDays(days);
+      }
+    }
+    fetchChallenge();
+  }, [id]);
 
-  if (isNaN(fromDate) || isNaN(toDate)) {
-    return notFound();
-  }
+  // Handler to increment progress
+  const handleAddDay = async () => {
+    if (!challengeDocPath) return;
+    const newProgress = progress + 1;
+    setProgress(newProgress);
+    await updateDoc(doc(db, ...challengeDocPath.split("/")), {
+      "progress.daysCompleted": newProgress,
+      "progress.lastUpdated": new Date().toISOString(),
+    });
+  };
+
+  if (!challenge) return <div>Loading...</div>;
+
+  const fromDate =
+    challenge.from && typeof challenge.from.toDate === "function"
+      ? challenge.from.toDate()
+      : new Date(challenge.from);
+
+  const toDate =
+    challenge.to && typeof challenge.to.toDate === "function"
+      ? challenge.to.toDate()
+      : new Date(challenge.to);
 
   return (
     <div className="p-4 border py-8 xl:py-14 rounded-lg shadow-sm mb-6 max-w-[600px] mx-auto">
@@ -44,12 +100,12 @@ export default async function SharedPage({ searchParams }) {
 
           <div>
             <p className="text-sm text-gray-600">I will do:</p>
-            <p className="text-base font-medium">{activity}</p>
+            <p className="text-base font-medium">{challenge.activity}</p>
           </div>
 
           <div>
             <p className="text-sm text-gray-600">For:</p>
-            <p className="text-base font-medium">{time} mins daily</p>
+            <p className="text-base font-medium">{challenge.time} mins daily</p>
           </div>
 
           <div>
@@ -88,12 +144,46 @@ export default async function SharedPage({ searchParams }) {
               </span>
             </div>
           </h3>
-
           <Image src={icon} width={100} height={100} alt="Challenge Icon" />
         </div>
       </div>
       <div className="flex flex-col justify-center items-center mt-10">
-        <ProgresBar finalDays={finalDays} />
+        <span className="mb-2">Progress bar</span>
+        <div className="flex gap-4 items-center mb-4">
+          <button
+            onClick={handleAddDay}
+            className="px-6 py-1 bg-gray-800 text-slate-100 rounded-xl hover:scale-105 transition-transform duration-300"
+            disabled={progress >= finalDays}
+          >
+            Add
+          </button>
+          <span>
+            Day {progress} of {finalDays} Days
+          </span>
+        </div>
+        <div className="flex items-center w-full gap-8">
+          <div className="flex.1 w-full">
+            <div
+              style={{
+                width: "100%",
+                height: "16px",
+                borderRadius: "8px",
+                background: "#e5e7eb",
+                overflow: "hidden",
+              }}
+            >
+              <div
+                style={{
+                  width: `${(progress * 100) / finalDays}%`,
+                  height: "100%",
+                  background: "#1f2937",
+                  borderRadius: "8px",
+                  transition: "width 0.3s",
+                }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -1,53 +1,51 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DateRangePicker } from "./ui/calendar";
 import SelectDemo from "./Select";
 import DrawerDemo from "./SelectTarget";
 import Link from "next/link";
 import icon from "@/public/icon.png";
-import { useRouter } from "next/navigation";
-import { useCallback } from "react";
-import { resolve } from "styled-jsx/css";
-import toast from "react-hot-toast";
-import SharedLinks from "./Shared-links";
 import Header from "./Header";
-import LoginButton from "./LoginButton";
 import { useAuth } from "../app/context/AuthContext";
-
+import CopyShareButton from "./CopyShareButton";
+import AuthPage from "../app/auth/page";
+import { useRouter } from "next/navigation";
 export default function All() {
   const [datum, setDatum] = useState({ from: null, to: null });
   const [stvar, setStvar] = useState();
   const [time, setTime] = useState();
   const [isLInk, setLink] = useState();
+  const [onPage, setOnPage] = useState(true);
   const { user, loading } = useAuth();
 
-  const handleClick = async () => {
-    if (typeof window === "undefined") return;
-
-    const timestamp = Date.now();
-    const fromParam = encodeURIComponent(datum.from.toISOString());
-    const toParam = encodeURIComponent(datum.to.toISOString());
-    let link = "";
-
-    link = `${window.location.origin}/share/${timestamp}?activity=${stvar}&time=${time}&from=${fromParam}&to=${toParam}`;
-    setLink(link);
-
-    try {
-      await navigator.clipboard.writeText(link);
-      toast.success("Copied");
-    } catch (e) {
-      console.log(e);
-    }
+  const changePage = () => {
+    setOnPage(!onPage);
   };
+
+  useEffect(() => {
+    const saved = localStorage.getItem("challengeSelections");
+    if (saved) {
+      let { datum, stvar, time } = JSON.parse(saved);
+      // Convert datum.from and datum.to to Date objects if they exist
+      if (datum) {
+        datum = {
+          from: datum.from ? new Date(datum.from) : null,
+          to: datum.to ? new Date(datum.to) : null,
+        };
+        setDatum(datum);
+      }
+      if (stvar) setStvar(stvar);
+      if (time) setTime(time);
+      localStorage.removeItem("challengeSelections");
+    }
+  }, []);
 
   return (
     <>
       <Header />
-
       <div className="flex flex-col xl:flex-row items-center justify-center gap-6">
-        {" "}
         I will be
         <div>
           <SelectDemo setStvar={setStvar} />
@@ -59,33 +57,10 @@ export default function All() {
         for
         <div className="mb-20 xl:mb-0">
           <DrawerDemo setTime={setTime} stvar={stvar} />
-          {datum && stvar && time && !loading && !user ? (
-            <div className="mt-8">
-              <LoginButton />
-            </div>
-          ) : null}
-          {datum && stvar && time && user ? (
-            <div className="flex justify-center items-center mt-20 xl:hidden ">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-6 xl:hidden"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"
-                />
-              </svg>
-            </div>
-          ) : null}
         </div>
       </div>
       <div>
-        {datum && stvar && time && user ? (
+        {datum && stvar && time && (
           <div className="p-4 border py-8 xl:py-14 rounded-lg shadow-sm mb-6 max-w-[600px] mx-auto">
             <div className="flex flex-row justify-evenly items-center gap-6">
               {/* LEFT COLUMN: Commitment Details */}
@@ -164,18 +139,11 @@ export default function All() {
                     alt="Challenge Icon"
                   />
                 </div>
-                <div>
-                  <button
-                    className="bg-gray-800 py-2 px-4 rounded-lg text-white flex items-center gap-2 hover:scale-105 transition-transform text-sm"
-                    onClick={handleClick}
-                  >
-                    Copy & Share
-                  </button>
-                </div>
+                <CopyShareButton datum={datum} time={time} stvar={stvar} />
               </div>
             </div>
           </div>
-        ) : null}
+        )}
       </div>
     </>
   );
