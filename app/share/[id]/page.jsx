@@ -193,7 +193,7 @@ export default function SharedPage({ params }) {
             stroke="currentColor"
             className={`size-12 ${
               progress >= finalDays ? "opacity-100" : "opacity-60"
-            }`}
+            } hover:scale-[130%] transition-transform duration-300`}
           >
             <path
               strokeLinecap="round"
