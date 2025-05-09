@@ -9,6 +9,7 @@ import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
 export default function CopyShareButton({ datum, stvar, time }) {
   const [isLInk, setLink] = useState();
+  const [showManualCopy, setShowManualCopy] = useState(false);
   const router = useRouter();
   const { user } = useAuth();
 
@@ -41,14 +42,21 @@ export default function CopyShareButton({ datum, stvar, time }) {
         shareId: challangeId,
       });
 
-      // After successful save, set the link and copy to clipboard
       setLink(link);
-      await navigator.clipboard.writeText(link);
-      toast.success("Challenge saved and link copied!");
-
-      // Redirect to challenges page
+      // Try to use Clipboard API if available
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(link);
+        toast.success("Challenge saved and link copied!");
+        setShowManualCopy(false);
+      } else {
+        // Clipboard API not available
+        setShowManualCopy(true);
+        toast("Copy the link manually below.");
+      }
     } catch (e) {
-      toast.error("Failed to save or copy link");
+      // If clipboard fails, show manual copy UI
+      setShowManualCopy(true);
+      toast.error("Failed to save or copy link. Copy manually below.");
       console.error(e);
     }
   };
@@ -61,6 +69,21 @@ export default function CopyShareButton({ datum, stvar, time }) {
       >
         {!user ? "Login" : "Save & Share"}
       </button>
+      {showManualCopy && isLInk && (
+        <div className="mt-3 flex flex-col items-start gap-1">
+          <label className="text-xs text-gray-600">Copy this link:</label>
+          <input
+            type="text"
+            value={isLInk}
+            readOnly
+            className="w-full px-2 py-1 border rounded bg-gray-100 text-gray-800 text-xs"
+            onFocus={(e) => e.target.select()}
+          />
+          <span className="text-xs text-gray-500">
+            Tap and hold to copy on mobile.
+          </span>
+        </div>
+      )}
     </div>
   );
 }
