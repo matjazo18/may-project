@@ -43,18 +43,45 @@ export default function CopyShareButton({ datum, stvar, time }) {
       });
 
       setLink(link);
-      // Try to use Clipboard API if available
+      let copied = false;
+      // Try Clipboard API first
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(link);
-        toast.success("Challenge saved and link copied!");
-        setShowManualCopy(false);
-      } else {
-        // Clipboard API not available
+        try {
+          await navigator.clipboard.writeText(link);
+          toast.success("Challenge saved and link copied!");
+          setShowManualCopy(false);
+          copied = true;
+        } catch (err) {
+          // Clipboard API failed, will try fallback
+        }
+      }
+      // Fallback: execCommand hack
+      if (!copied) {
+        try {
+          const textarea = document.createElement("textarea");
+          textarea.value = link;
+          textarea.setAttribute("readonly", "");
+          textarea.style.position = "absolute";
+          textarea.style.left = "-9999px";
+          document.body.appendChild(textarea);
+          textarea.select();
+          const successful = document.execCommand("copy");
+          document.body.removeChild(textarea);
+          if (successful) {
+            toast.success("Challenge saved and link copied!");
+            setShowManualCopy(false);
+            copied = true;
+          }
+        } catch (err) {
+          // Fallback also failed
+        }
+      }
+      // If both methods fail, show manual copy UI
+      if (!copied) {
         setShowManualCopy(true);
         toast("Copy the link manually below.");
       }
     } catch (e) {
-      // If clipboard fails, show manual copy UI
       setShowManualCopy(true);
       toast.error("Failed to save or copy link. Copy manually below.");
       console.error(e);
