@@ -23,14 +23,13 @@ export default function CopyShareButton({ datum, stvar, time }) {
     }
     if (typeof window === "undefined") return;
 
-    const challangeId = String(Date.now());
-    const fromParam = encodeURIComponent(datum.from.toISOString());
-    const toParam = encodeURIComponent(datum.to.toISOString());
-    const link = `${window.location.origin}/share/${challangeId}?activity=${stvar}&time=${time}&from=${fromParam}&to=${toParam}`;
-    setLink(link);
-
     try {
-      // Store challenge in Firestore
+      const challangeId = String(Date.now());
+      const fromParam = encodeURIComponent(datum.from.toISOString());
+      const toParam = encodeURIComponent(datum.to.toISOString());
+      const link = `${window.location.origin}/share/${challangeId}?activity=${stvar}&time=${time}&from=${fromParam}&to=${toParam}`;
+
+      // Store challenge in Firestore first
       await setDoc(doc(db, "users", user.uid, "challenges", challangeId), {
         from: datum.from,
         to: datum.to,
@@ -44,12 +43,16 @@ export default function CopyShareButton({ datum, stvar, time }) {
         shareId: challangeId,
       });
 
-      // Copy link to clipboard
+      // After successful save, set the link and copy to clipboard
+      setLink(link);
       await navigator.clipboard.writeText(link);
-      toast.success("Copied");
+      toast.success("Challenge saved and link copied!");
+
+      // Redirect to challenges page
+      router.push("/challenges");
     } catch (e) {
       toast.error("Failed to save or copy link");
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -59,7 +62,7 @@ export default function CopyShareButton({ datum, stvar, time }) {
         className="bg-gray-800 py-2 px-4 rounded-lg text-white flex items-center gap-2 hover:scale-105 transition-transform text-sm"
         onClick={handleClick}
       >
-        {!user ? "Login" : "Copy&share"}
+        {!user ? "Login" : "Save & Share"}
       </button>
     </div>
   );

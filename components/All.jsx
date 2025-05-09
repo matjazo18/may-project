@@ -12,12 +12,15 @@ import { useAuth } from "../app/context/AuthContext";
 import CopyShareButton from "./CopyShareButton";
 import AuthPage from "../app/auth/page";
 import { useRouter } from "next/navigation";
+import Challenges from "./Challenges";
+
 export default function All() {
   const [datum, setDatum] = useState({ from: null, to: null });
   const [stvar, setStvar] = useState();
   const [time, setTime] = useState();
   const [isLInk, setLink] = useState();
   const [onPage, setOnPage] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const { user, loading } = useAuth();
 
   const changePage = () => {
@@ -42,6 +45,13 @@ export default function All() {
     }
   }, []);
 
+  // Show modal when all fields are filled
+  useEffect(() => {
+    if (datum && stvar && time) {
+      setShowModal(true);
+    }
+  }, [datum, stvar, time]);
+
   return (
     <>
       <Header />
@@ -59,9 +69,33 @@ export default function All() {
           <DrawerDemo setTime={setTime} stvar={stvar} />
         </div>
       </div>
-      <div>
-        {datum && stvar && time && (
-          <div className="p-4 border py-8 xl:py-14 rounded-lg shadow-sm mb-6 max-w-[600px] mx-auto">
+      <Challenges />
+
+      {/* Modal Backdrop */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="p-4 border py-8 xl:py-14 rounded-lg shadow-lg mb-6 max-w-[600px] w-full mx-4 bg-white relative animate-fade-in">
+            {/* Close button */}
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+
             <div className="flex flex-row justify-evenly items-center gap-6">
               {/* LEFT COLUMN: Commitment Details */}
               <div className="flex flex-col space-y-4">
@@ -119,7 +153,7 @@ export default function All() {
               </div>
 
               {/* RIGHT COLUMN: Motivation + Share */}
-              <div className="flex flex-col items-center justify-center text-center space-y-4 ">
+              <div className="flex flex-col items-center justify-center text-center space-y-4">
                 <div>
                   <h3 className="text-2xl md:text-4xl font-extrabold bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent leading-tight">
                     <div className="flex flex-col">
@@ -143,8 +177,8 @@ export default function All() {
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </>
   );
 }

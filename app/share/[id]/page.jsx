@@ -208,6 +208,26 @@ export default function SharedPage({ params }) {
             <span>🎉 Congrats! You completed the challenge! 🎉</span>
           </div>
         )}
+        {/* Display stored values from database */}
+        {challenge && (
+          <div className="mt-6 p-4 border rounded-lg shadow-sm">
+            <h3 className="text-lg font-bold mb-2">Stored Challenge Details</h3>
+            <p>
+              <strong>Activity:</strong> {challenge.activity}
+            </p>
+            <p>
+              <strong>Time:</strong> {challenge.time} mins daily
+            </p>
+            <p>
+              <strong>Date Range:</strong> {fromDate.toLocaleDateString()} to{" "}
+              {toDate.toLocaleDateString()}
+            </p>
+            <p>
+              <strong>Stakes:</strong> If I miss a day, I owe you{" "}
+              <span className="font-bold">$5</span>
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
