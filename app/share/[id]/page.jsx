@@ -3,8 +3,7 @@ import { use, useEffect, useState } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import icon from "@/public/icon.png";
-import { Progress } from "@radix-ui/react-progress";
-import ProgresBar from "@/components/ProgresBar";
+import { Progress } from "@/components/ui/progress";
 import { db } from "@/lib/firebase";
 import {
   doc,
@@ -22,6 +21,8 @@ export default function SharedPage({ params }) {
   const [progress, setProgress] = useState(0);
   const [finalDays, setFinalDays] = useState(1);
   const [challengeDocPath, setChallengeDocPath] = useState(null);
+  const [lastUpdated, setLastUpdated] = useState(null);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   // Fetch challenge by shareId
   useEffect(() => {
@@ -36,6 +37,7 @@ export default function SharedPage({ params }) {
         const data = docSnap.data();
         setChallenge(data);
         setProgress(data.progress?.daysCompleted || 0);
+        setLastUpdated(data.progress?.lastUpdated || null);
         setChallengeDocPath(docSnap.ref.path);
 
         // Calculate finalDays
@@ -47,7 +49,7 @@ export default function SharedPage({ params }) {
           data.to && typeof data.to.toDate === "function"
             ? data.to.toDate()
             : new Date(data.to);
-        const days = (toDate - fromDate) / (1000 * 60 * 60 * 24);
+        const days = Math.ceil((toDate - fromDate) / (1000 * 60 * 60 * 24));
         setFinalDays(days);
       }
     }
@@ -57,12 +59,29 @@ export default function SharedPage({ params }) {
   // Handler to increment progress
   const handleAddDay = async () => {
     if (!challengeDocPath) return;
+    // Check if a day was already added today
+    const today = new Date();
+    if (
+      lastUpdated &&
+      new Date(lastUpdated).getDate() === today.getDate() &&
+      new Date(lastUpdated).getMonth() === today.getMonth() &&
+      new Date(lastUpdated).getFullYear() === today.getFullYear()
+    ) {
+      alert("You can only add one day per day!");
+      return;
+    }
     const newProgress = progress + 1;
     setProgress(newProgress);
+    setLastUpdated(today.toISOString());
     await updateDoc(doc(db, ...challengeDocPath.split("/")), {
       "progress.daysCompleted": newProgress,
-      "progress.lastUpdated": new Date().toISOString(),
+      "progress.lastUpdated": today.toISOString(),
     });
+    // Show confetti if challenge is completed
+    if (newProgress >= finalDays) {
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 5000);
+    }
   };
 
   if (!challenge) return <div>Loading...</div>;
@@ -77,8 +96,17 @@ export default function SharedPage({ params }) {
       ? challenge.to.toDate()
       : new Date(challenge.to);
 
+  const progressPercentage = (progress * 100) / finalDays;
+  const isCompleted = progress >= finalDays;
+
   return (
     <div className="p-4 border py-8 xl:py-14 rounded-lg shadow-sm mb-6 max-w-[600px] mx-auto mt-20">
+      {showConfetti && (
+        <div className="fixed inset-0 z-50 pointer-events-none">
+          {/* You can use a confetti library here if desired */}
+          <div className="text-6xl text-center mt-40 animate-bounce">🎉</div>
+        </div>
+      )}
       <div className="flex  justify-between items-center gap-6 ">
         {/* LEFT COLUMN */}
         <div className="flex flex-col space-y-4 text-left  ">
@@ -147,52 +175,27 @@ export default function SharedPage({ params }) {
           <Image src={icon} width={100} height={100} alt="Challenge Icon" />
         </div>
       </div>
-      <div className="flex flex-col justify-start items-start mt-10">
+      {/* Progress Bar Section */}
+      <div className="flex flex-col justify-start items-start mt-10 w-full">
         <span className="mb-2">Progress bar</span>
-        <div className="flex gap-4 items-center mb-4">
-          <button
-            onClick={handleAddDay}
-            className="px-6 py-1 bg-gray-800 text-slate-100 rounded-xl hover:scale-105 transition-transform duration-300"
-            disabled={progress >= finalDays}
-          >
-            Add
-          </button>
+        <div className="flex gap-4 items-center mb-4 w-full">
           <span>
             Day {progress} of {finalDays} Days
           </span>
         </div>
         <div className="flex items-center w-full gap-8">
-          <div className="flex.1 w-full">
-            <div
-              style={{
-                width: "100%",
-                height: "16px",
-                borderRadius: "8px",
-                background: "#e5e7eb",
-                overflow: "hidden",
-              }}
-            >
-              <div
-                style={{
-                  width: `${(progress * 100) / finalDays}%`,
-                  height: "100%",
-                  background: "#1f2937",
-                  borderRadius: "8px",
-                  transition: "width 0.3s",
-                }}
-                className="bg-gradient-to-r from-[#e926e9] to-orange-400"
-              />
-            </div>
+          <div className="flex-1 w-full">
+            <Progress value={progressPercentage} className="flex-1" />
           </div>
           {/* Trophy Icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill={progress >= finalDays ? "yellow" : "none"}
+            fill={isCompleted ? "yellow" : "none"}
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
             className={`size-12 ${
-              progress >= finalDays ? "opacity-100" : "opacity-60"
+              isCompleted ? "opacity-100" : "opacity-60"
             } hover:scale-[130%] transition-transform duration-300`}
           >
             <path
@@ -203,29 +206,9 @@ export default function SharedPage({ params }) {
           </svg>
         </div>
         {/* Congrats message */}
-        {progress >= finalDays && (
+        {isCompleted && (
           <div className="mt-4 text-xl font-bold text-yellow-600 flex items-center gap-2 animate-bounce">
             <span>🎉 Congrats! You completed the challenge! 🎉</span>
-          </div>
-        )}
-        {/* Display stored values from database */}
-        {challenge && (
-          <div className="mt-6 p-4 border rounded-lg shadow-sm">
-            <h3 className="text-lg font-bold mb-2">Stored Challenge Details</h3>
-            <p>
-              <strong>Activity:</strong> {challenge.activity}
-            </p>
-            <p>
-              <strong>Time:</strong> {challenge.time} mins daily
-            </p>
-            <p>
-              <strong>Date Range:</strong> {fromDate.toLocaleDateString()} to{" "}
-              {toDate.toLocaleDateString()}
-            </p>
-            <p>
-              <strong>Stakes:</strong> If I miss a day, I owe you{" "}
-              <span className="font-bold">$5</span>
-            </p>
           </div>
         )}
       </div>

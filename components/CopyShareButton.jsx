@@ -49,7 +49,6 @@ export default function CopyShareButton({ datum, stvar, time }) {
       toast.success("Challenge saved and link copied!");
 
       // Redirect to challenges page
-      router.push("/challenges");
     } catch (e) {
       toast.error("Failed to save or copy link");
       console.error(e);
