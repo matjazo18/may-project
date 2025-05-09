@@ -25,9 +25,7 @@ export default function CopyShareButton({ datum, stvar, time }) {
 
     try {
       const challangeId = String(Date.now());
-      const fromParam = encodeURIComponent(datum.from.toISOString());
-      const toParam = encodeURIComponent(datum.to.toISOString());
-      const link = `${window.location.origin}/share/${challangeId}?activity=${stvar}&time=${time}&from=${fromParam}&to=${toParam}`;
+      const link = `${window.location.origin}/share/${challangeId}`;
 
       // Store challenge in Firestore first
       await setDoc(doc(db, "users", user.uid, "challenges", challangeId), {
