@@ -19,7 +19,7 @@ export default function ProgresBar({ finalDays }) {
       <div className="flex flex-col justify-start items-start w-full max-w-xl px-4 mx-auto">
         <span className="mb-2">Progress bar</span>
 
-        <div className="flex gap-4 items-center mb-4">
+        <div className="flex gap-4 items-start mb-4">
           <button
             onClick={changeDays}
             className="px-6 py-1 bg-gray-800 text-slate-100 rounded-xl hover:scale-105 transition-transform duration-300"
@@ -31,12 +31,12 @@ export default function ProgresBar({ finalDays }) {
           </span>
         </div>
 
-        <div className="flex items-center w-full gap-8">
+        <div className="flex items-start justify-start w-full gap-8">
           {/* 👇 This div wraps the progress bar and makes it responsive */}
           <div className="flex.1 w-full">
             <Progress
               value={result}
-              className="w-full h-4 rounded-full bg-gray-200"
+              indicatorClassName="bg-gradient-to-br from-[#e926e9] to-orange-400"
             />
           </div>
 

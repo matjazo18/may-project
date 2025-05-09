@@ -49,7 +49,12 @@ export default function DrawerDemo({ stvar, setTime }) {
   return (
     <Drawer open={open} onOpenChange={SetItOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline">How much time ?</Button>
+        <Button
+          variant="outline"
+          className="bg-gradient-to-br from-[#e926e9] to-orange-400 text-black"
+        >
+          How much time ?
+        </Button>
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">

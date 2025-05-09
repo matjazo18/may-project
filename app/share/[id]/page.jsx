@@ -147,7 +147,7 @@ export default function SharedPage({ params }) {
           <Image src={icon} width={100} height={100} alt="Challenge Icon" />
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center mt-10">
+      <div className="flex flex-col justify-start items-start mt-10">
         <span className="mb-2">Progress bar</span>
         <div className="flex gap-4 items-center mb-4">
           <button
@@ -180,6 +180,7 @@ export default function SharedPage({ params }) {
                   borderRadius: "8px",
                   transition: "width 0.3s",
                 }}
+                className="bg-gradient-to-r from-[#e926e9] to-orange-400"
               />
             </div>
           </div>
