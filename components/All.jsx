@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { DateRangePicker } from "./ui/calendar";
+import { DatePickerWithRange } from "./ui/calendar";
 import SelectDemo from "./Select";
 import DrawerDemo from "./SelectTarget";
 import Link from "next/link";
@@ -62,7 +62,7 @@ export default function All() {
         </div>
         from
         <div>
-          <DateRangePicker setDatum={setDatum} />
+          <DatePickerWithRange date={datum} setDate={setDatum} />
         </div>
         for
         <div className="mb-20 xl:mb-0">
