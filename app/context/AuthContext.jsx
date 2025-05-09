@@ -28,7 +28,6 @@ export const AuthProvider = ({ children }) => {
             displayName: user.displayName,
             photoURL: user.photoURL,
             createdAt: new Date().toISOString(),
-            challanges: user.challanges,
           });
         }
       }
