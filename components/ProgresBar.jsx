@@ -46,7 +46,7 @@ export default function ProgresBar({ finalDays }) {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className={`size-10 ${
+            className={`size-12 ${
               progress !== finalDays ? opacityClass : "opacity-[100%]"
             }`}
           >
