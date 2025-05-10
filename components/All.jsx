@@ -23,6 +23,30 @@ export default function All() {
   const [showModal, setShowModal] = useState(false);
   const { user, loading } = useAuth();
 
+  // Emoji mapping for activities
+  const emojiMap = {
+    Exercising: "🏋️",
+    Reading: "📚",
+    Meditating: "🧘",
+    Studying: "📝",
+    "Learning new language": "🗣️",
+    Cooking: "👨‍🍳",
+    Drawing: "🎨",
+    Journaling: "✏️",
+    Running: "🏃",
+    Yoga: "🧘‍♂️",
+    Coding: "💻",
+    "Playing music": "🎸",
+    Gardening: "🌱",
+    "Healthy eating": "🥗",
+    Volunteering: "🤝",
+    Cleaning: "🧹",
+    Dancing: "💃",
+    Swimming: "🏊",
+    Walking: "🚶",
+    Cycling: "🚴",
+  };
+
   const changePage = () => {
     setOnPage(!onPage);
   };
@@ -55,7 +79,7 @@ export default function All() {
   return (
     <>
       <Header />
-      <div className="flex flex-col xl:flex-row items-center justify-center gap-6">
+      <div className="flex flex-col xl:flex-row items-center justify-center gap-6 mb-10 xl:mb-20">
         I will be
         <div>
           <SelectDemo setStvar={setStvar} />
@@ -65,10 +89,12 @@ export default function All() {
           <DatePickerWithRange date={datum} setDate={setDatum} />
         </div>
         for
-        <div className="mb-20 xl:mb-0">
+        <div className="mb-20 xl:mb-0 hover:scale-105 transition-300 duration-300 transition-all">
           <DrawerDemo setTime={setTime} stvar={stvar} />
         </div>
       </div>
+      {/* Show selected value with emoji */}
+
       <Challenges />
 
       {/* Modal Backdrop */}
@@ -117,7 +143,10 @@ export default function All() {
 
                 <div>
                   <p className="text-sm text-gray-600">I will do:</p>
-                  <p className="text-base font-medium">{stvar}</p>
+                  <p className="text-base font-medium flex items-center">
+                    <span className="mr-2">{emojiMap[stvar]}</span>
+                    <span>{stvar}</span>
+                  </p>
                 </div>
 
                 <div>

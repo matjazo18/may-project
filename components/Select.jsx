@@ -28,7 +28,7 @@ export default function SelectDemo({ setStvar }) {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value="Exercising">🏋️ Exercising</SelectItem>
+                <SelectItem value="🏋️ Exercising">🏋️ Exercising</SelectItem>
                 <SelectItem value="Reading">📚 Reading</SelectItem>
                 <SelectItem value="Meditating">🧘 Meditating</SelectItem>
                 <SelectItem value="Studying">📝 Studying</SelectItem>
