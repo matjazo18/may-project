@@ -68,6 +68,9 @@ const Calendar = React.forwardRef(function Calendar(
 export { Calendar };
 
 export function DatePickerWithRange({ className, date, setDate }) {
+  // Always show one month
+  const numberOfMonths = 1;
+
   return (
     <div className={cn("grid gap-2", className)}>
       <Popover>
@@ -101,7 +104,7 @@ export function DatePickerWithRange({ className, date, setDate }) {
             defaultMonth={date?.from}
             selected={date}
             onSelect={setDate}
-            numberOfMonths={2}
+            numberOfMonths={numberOfMonths}
           />
         </PopoverContent>
       </Popover>

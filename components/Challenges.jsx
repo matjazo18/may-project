@@ -121,7 +121,14 @@ export default function Challenges() {
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">My Challenges</h2>
-      {challenges.length === 0 ? (
+      {!user ? (
+        <button
+          className="bg-gray-800 text-slate-100 px-6 py-2 rounded-lg font-semibold shadow hover:scale-105 transition-transform"
+          onClick={() => (window.location.href = "/auth")}
+        >
+          Login to see your challenges
+        </button>
+      ) : challenges.length === 0 ? (
         <p>No challenges found.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
