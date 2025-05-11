@@ -78,7 +78,7 @@ export function DatePickerWithRange({ className, date, setDate }) {
           <Button
             id="date"
             className={cn(
-              "w-[300px] justify-start text-left font-normal bg-gradient-to-br from-[#e926e9] to-orange-400 text-black rounded-lg shadow-md border-none hover:scale-105 transition-transform",
+              "w-[300px] justify-start text-left font-normal bg-gradient-to-br from-[#e926e9] to-orange-400 text-slate-100 rounded-lg shadow-md border-none ",
               !date && "text-muted-foreground"
             )}
           >

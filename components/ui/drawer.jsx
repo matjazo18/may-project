@@ -41,7 +41,7 @@ function DrawerContent({ className, children, ...props }) {
       <DrawerPrimitive.Content
         data-slot="drawer-content"
         className={cn(
-          "group/drawer-content fixed z-50 flex h-auto flex-col bg-gradient-to-br from-[#e926e9] to-orange-400 text-black",
+          "group/drawer-content fixed z-50 flex h-auto flex-col bg-gradient-to-br from-[#e926e9] to-orange-400 text-slate-100",
 
           // TOP drawer styles
           "data-[vaul-drawer-direction=top]:inset-x-0 data-[vaul-drawer-direction=top]:top-0 data-[vaul-drawer-direction=top]:mb-24 data-[vaul-drawer-direction=top]:max-h-[80vh] data-[vaul-drawer-direction=top]:rounded-b-lg data-[vaul-drawer-direction=top]:border-b border-pink-400",

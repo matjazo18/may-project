@@ -81,11 +81,11 @@ export default function All() {
       <Header />
       <div className="flex flex-col xl:flex-row items-center justify-center gap-6 mb-10 xl:mb-20">
         I will be
-        <div>
+        <div className="mb-20 xl:mb-0 hover:scale-105 transition-300 duration-300 transition-all">
           <SelectDemo setStvar={setStvar} />
         </div>
         from
-        <div>
+        <div className="mb-20 xl:mb-0 hover:scale-105 transition-300 duration-300 transition-all">
           <DatePickerWithRange date={datum} setDate={setDatum} />
         </div>
         for

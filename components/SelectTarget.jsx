@@ -51,9 +51,9 @@ export default function DrawerDemo({ stvar, setTime }) {
       <DrawerTrigger asChild>
         <Button
           variant="outline"
-          className="bg-gradient-to-br from-[#e926e9] to-orange-400 text-black"
+          className="bg-gradient-to-br from-[#e926e9] to-orange-400 text-slate-100"
         >
-          How much time ?
+          {goal ? `${goal} min/day` : "How much time"}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
@@ -77,18 +77,20 @@ export default function DrawerDemo({ stvar, setTime }) {
             </DrawerDescription>
           </DrawerHeader>
           <div className="p-4 pb-0">
-            <div className="flex items-center justify-center space-x-2">
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8 shrink-0 rounded-full"
-                onClick={() => onClick(-1)}
-                disabled={goal <= 1}
-              >
-                <Minus className="h-4 w-4" />
-                <span className="sr-only">Decrease</span>
-              </Button>
-              <div className="flex-1 text-center">
+            <div className="flex items-center justify-center space-x-2 my-16">
+              <div>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8 shrink-0 rounded-full"
+                  onClick={() => onClick(-1)}
+                  disabled={goal <= 1}
+                >
+                  <Minus className="h-4 w-4" />
+                  <span className="sr-only">Decrease</span>
+                </Button>
+              </div>
+              <div className="flex-1 text-center justify-center items-center ">
                 <div className="text-7xl font-bold tracking-tighter">
                   {goal}
                 </div>
@@ -96,29 +98,18 @@ export default function DrawerDemo({ stvar, setTime }) {
                   min/day
                 </div>
               </div>
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-8 w-8 shrink-0 rounded-full"
-                onClick={() => onClick(1)}
-                disabled={goal >= 180}
-              >
-                <Plus className="h-4 w-4" />
-                <span className="sr-only">Increase</span>
-              </Button>
-            </div>
-            <div className="mt-3 h-[120px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={data}>
-                  <Bar
-                    dataKey="goal"
-                    style={{
-                      fill: "hsl(var(--foreground))",
-                      opacity: 0.9,
-                    }}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+              <div>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8 shrink-0 rounded-full"
+                  onClick={() => onClick(1)}
+                  disabled={goal >= 180}
+                >
+                  <Plus className="h-4 w-4" />
+                  <span className="sr-only">Increase</span>
+                </Button>
+              </div>
             </div>
           </div>
           <DrawerFooter>
