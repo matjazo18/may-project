@@ -33,7 +33,7 @@ const data = [
 ];
 
 export default function DrawerDemo({ stvar, setTime }) {
-  const [goal, setGoal] = useState(5);
+  const [goal, setGoal] = useState(0);
   const [value, submitedVal] = useState();
   const [open, SetItOpen] = useState(false);
 
