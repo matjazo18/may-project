@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import icon from "@/public/icon.png";
-import { motion } from "framer-motion";
+import motion from "framer-motion";
 
 export default function Header() {
   return (
