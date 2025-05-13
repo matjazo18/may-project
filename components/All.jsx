@@ -99,7 +99,7 @@ export default function All() {
 
       {/* Modal Backdrop */}
       {showModal && (
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center">
+        <div className="fixed inset-0 w-screen h-screen bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center">
           <div className="p-4 border py-8 xl:py-14 rounded-lg shadow-lg mb-6 max-w-[600px] w-full mx-4 bg-white relative animate-fade-in">
             {/* Close button */}
             <button
