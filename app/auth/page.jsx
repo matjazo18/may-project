@@ -4,14 +4,18 @@ import { useState } from "react";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../../lib/firebase";
 import Header from "@/components/Header";
 import { useRouter } from "next/navigation";
+import { db } from "../../lib/firebase";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
 export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [isRegister, setIsRegister] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,7 +27,18 @@ export default function AuthPage() {
     setLoading(true);
     try {
       if (isRegister) {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        await updateProfile(userCredential.user, { displayName: name });
+        await setDoc(doc(db, "users", userCredential.user.uid), {
+          displayName: name,
+          email: email,
+          photoURL: userCredential.user.photoURL || null,
+          createdAt: serverTimestamp(),
+        });
       } else {
         await signInWithEmailAndPassword(auth, email, password);
       }
@@ -47,6 +62,16 @@ export default function AuthPage() {
           onSubmit={handleSubmit}
           className="flex flex-col gap-4 w-80 max-w-full p-6 rounded-xl shadow-lg border border-gray-100"
         >
+          {isRegister && (
+            <input
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="border border-gray-300 px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-400"
+              required
+            />
+          )}
           <input
             type="email"
             placeholder="Email"

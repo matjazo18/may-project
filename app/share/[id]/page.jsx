@@ -23,6 +23,8 @@ export default function SharedPage({ params }) {
   const [challengeDocPath, setChallengeDocPath] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [name, setName] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   // Fetch challenge by shareId
   useEffect(() => {
@@ -32,13 +34,19 @@ export default function SharedPage({ params }) {
         where("shareId", "==", id)
       );
       const querySnapshot = await getDocs(q);
+      console.log(querySnapshot);
+      console.log("Query snapshot");
       if (!querySnapshot.empty) {
         const docSnap = querySnapshot.docs[0];
         const data = docSnap.data();
+        console.log(data);
+        console.log("DAta");
         setChallenge(data);
         setProgress(data.progress?.daysCompleted || 0);
         setLastUpdated(data.progress?.lastUpdated || null);
         setChallengeDocPath(docSnap.ref.path);
+        setUserId(data.userId);
+        console.log(data.userId);
 
         // Calculate finalDays
         const fromDate =
@@ -55,6 +63,21 @@ export default function SharedPage({ params }) {
     }
     fetchChallenge();
   }, [id]);
+
+  // Fetch user displayName by userId
+  useEffect(() => {
+    if (!userId) return;
+    async function fetchUser() {
+      const userDocRef = doc(db, "users", userId);
+      console.log(userDocRef);
+      const userDocSnap = await getDoc(userDocRef);
+      if (userDocSnap.exists()) {
+        setName(userDocSnap.data().displayName);
+        console.log(userDocSnap.data().displayName);
+      }
+    }
+    fetchUser();
+  }, [userId]);
 
   // Handler to increment progress
   const handleAddDay = async () => {
@@ -110,6 +133,10 @@ export default function SharedPage({ params }) {
       <div className="flex  justify-between items-center gap-6 ">
         {/* LEFT COLUMN */}
         <div className="flex flex-col space-y-4 text-left  ">
+          {/* Display the user's name */}
+          {name && (
+            <div className="text-lg font-bold mb-2">Challenger: {name}</div>
+          )}
           <div className="flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"

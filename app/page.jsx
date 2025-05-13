@@ -3,11 +3,12 @@ import DrawerDemo from "@/components/SelectTarget";
 import SelectDemo from "@/components/Select";
 import All from "@/components/All";
 import LoginButton from "@/components/LoginButton";
+import NameField from "@/components/NameField";
 
 export default function Home() {
   return (
-    <div className="container mx-auto">
-      <div className="">
+    <div className="container mx-auto py-8 px-4">
+      <div className="space-y-6">
         <All />
         <LoginButton />
       </div>
