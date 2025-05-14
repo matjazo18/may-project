@@ -1,21 +1,15 @@
 "use client";
 import Image from "next/image";
 import icon from "@/public/icon.png";
-import motion from "framer-motion";
 
 export default function Header() {
   return (
     <header className="container mx-auto py-6 px-4">
       {" "}
       {/* Added px-4 for mobile padding */}
-      <motion.div
-        className="flex flex-col items-center justify-center gap-2 mb-10"
-        initial={{ opacity: 0, y: -100 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
-      >
+      <div className="flex flex-col items-center justify-center gap-2 mb-10">
         {/* Medal icon with adjusted positioning */}
-        <motion.div>
+        <div>
           {" "}
           {/* Added mb-2 for spacing */}
           <Image
@@ -26,7 +20,7 @@ export default function Header() {
             alt="Achievement medal"
             priority // Ensures image loads quickly
           />
-        </motion.div>
+        </div>
 
         {/* Text container with proper line-height */}
         <div className="text-center">
@@ -52,7 +46,7 @@ export default function Header() {
           {/* Smaller text */}
           <div className="h-px w-16 bg-gradient-to-l from-transparent to-gray-300"></div>
         </div>
-      </motion.div>
+      </div>
     </header>
   );
 }
