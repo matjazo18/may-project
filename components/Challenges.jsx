@@ -7,6 +7,7 @@ import { db } from "../lib/firebase";
 import { collection, query, getDocs, updateDoc, doc } from "firebase/firestore";
 import { Progress } from "@/components/ui/progress";
 import Confetti from "react-confetti";
+import Link from "next/link";
 
 // Emoji mapping for activities (move outside so it's accessible to all components)
 const emojiMap = {
@@ -35,6 +36,8 @@ const emojiMap = {
 export default function Challenges() {
   const { user } = useAuth();
   const [challenges, setChallenges] = useState([]);
+  console.log("CHALLENGES");
+  console.log(challenges);
   const [confettiCardId, setConfettiCardId] = useState(null);
   const [windowSize, setWindowSize] = useState({
     width: typeof window !== "undefined" ? window.innerWidth : 0,
@@ -230,7 +233,40 @@ function ChallengeCard({ challenge, handleAddDay, showConfetti }) {
             <span>{challenge.activity}</span>
           </h3>
         </div>
-        <span className="text-sm text-gray-500">{challenge.time} mins</span>
+        <div className="flex flex-col items-end gap-2 justify-end">
+          <span className="text-sm text-gray-500">{challenge.time} mins</span>
+
+          <button
+            onClick={() =>
+              navigator.clipboard
+                .writeText(
+                  `https://may-project-xi.vercel.app/share/${challenge.id}`
+                )
+                .then(() => {
+                  toast.success("Copied");
+                })
+                .catch(() => {
+                  toast.error("Failed to copy");
+                })
+            }
+          >
+            {" "}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M8.25 7.5V6.108c0-1.135.845-2.098 1.976-2.192.373-.03.748-.057 1.123-.08M15.75 18H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08M15.75 18.75v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5A3.375 3.375 0 0 0 6.375 7.5H5.25m11.9-3.664A2.251 2.251 0 0 0 15 2.25h-1.5a2.251 2.251 0 0 0-2.15 1.586m5.8 0c.065.21.1.433.1.664v.75h-6V4.5c0-.231.035-.454.1-.664M6.75 7.5H4.875c-.621 0-1.125.504-1.125 1.125v12c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V16.5a9 9 0 0 0-9-9Z"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
       <div className="text-sm text-gray-600 mb-3">
         <p>
