@@ -197,7 +197,7 @@ export default function Challenges() {
           No challenges in this category
         </p>
       ) : (
-        <ScrollArea className="h-[500px] pr-4">
+        <ScrollArea className=" h-[300px] xl:h-[500px] pr-4">
           <div className="space-y-4">
             {challenges.map((challenge) => (
               <ChallengeCard
