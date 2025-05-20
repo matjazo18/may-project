@@ -236,12 +236,9 @@ export default function Challenges() {
             <p className="text-gray-600 mb-6">
               Start your journey by creating your first challenge
             </p>
-            <Link
-              href="/create"
-              className="bg-gray-800 text-slate-100 px-6 py-2 rounded-lg font-semibold shadow hover:scale-105 transition-transform inline-block"
-            >
+            <button className="bg-gray-800 text-slate-100 px-6 py-2 rounded-lg font-semibold shadow hover:scale-105 transition-transform inline-block">
               Create Challenge
-            </Link>
+            </button>
           </div>
         ) : (
           <div>
