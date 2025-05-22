@@ -215,7 +215,7 @@ export default function Challenges() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen ">
       <div className="max-w-[1400px] mx-auto px-4 py-8">
         {!user ? (
           <div className="text-center py-8">
@@ -236,9 +236,6 @@ export default function Challenges() {
             <p className="text-gray-600 mb-6">
               Start your journey by creating your first challenge
             </p>
-            <button className="bg-gray-800 text-slate-100 px-6 py-2 rounded-lg font-semibold shadow hover:scale-105 transition-transform inline-block">
-              Create Challenge
-            </button>
           </div>
         ) : (
           <div>
