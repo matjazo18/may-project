@@ -242,7 +242,7 @@ export default function Challenges() {
             <h1 className="text-3xl font-bold mb-8 text-center">
               My Challenges
             </h1>
-            <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex flex-col xl:flex-row gap-6 ">
               {renderSection(
                 "Not Started",
                 getChallengesByStatus().notStarted,
