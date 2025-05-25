@@ -7,6 +7,7 @@ import NameField from "@/components/NameField";
 
 
 //MAIN PAGE
+//dont want to lose my streak
 export default function Home() {
   return (
     <div className="container mx-auto py-8 px-4">
