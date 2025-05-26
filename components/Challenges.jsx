@@ -40,6 +40,7 @@ const emojiMap = {
   swimming: "🏊",
   walking: "🚶",
   cycling: "🚴",
+  "75 HARD": "💪",
 };
 
 export default function Challenges() {
