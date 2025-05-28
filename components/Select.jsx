@@ -47,6 +47,7 @@ export default function SelectDemo({ setStvar }) {
                 <SelectItem value="Healthy eating">
                   🥗 Healthy eating
                 </SelectItem>
+                <SelectItem value="Brush teeth">🪥 Brush teeth</SelectItem>
                 <SelectItem value="Volunteering">🤝 Volunteering</SelectItem>
                 <SelectItem value="Cleaning">🧹 Cleaning</SelectItem>
                 <SelectItem value="Dancing">💃 Dancing</SelectItem>
