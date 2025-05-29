@@ -51,7 +51,7 @@ export default function SelectDemo({ setStvar }) {
                 <SelectItem value="Volunteering">🤝 Volunteering</SelectItem>
                 <SelectItem value="Cleaning">🧹 Cleaning</SelectItem>
                 <SelectItem value="Dancing">💃 Dancing</SelectItem>
-                <SelectItem value="Swimming">🏊 Swimming</SelectItem>
+
                 <SelectItem value="Walking">🚶 Walking</SelectItem>
                 <SelectItem value="Cycling">🚴 Cycling</SelectItem>
               </SelectGroup>
