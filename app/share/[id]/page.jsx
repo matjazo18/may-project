@@ -200,7 +200,7 @@ export default function SharedPage({ params }) {
               </span>
             </div>
           </h3>
-          <Link href={`may-project-xi.vercel.app`}>
+          <Link href={`/`}>
             <Image src={icon} width={100} height={100} alt="Challenge Icon" />
           </Link>
         </div>
