@@ -54,6 +54,7 @@ export default function SelectDemo({ setStvar }) {
 
                 <SelectItem value="Walking">🚶 Walking</SelectItem>
                 <SelectItem value="Cycling">🚴 Cycling</SelectItem>
+                 <SelectItem value="Brainstorming">🧠 Brainstorming</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
