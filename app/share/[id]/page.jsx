@@ -199,7 +199,9 @@ export default function SharedPage({ params }) {
               </span>
             </div>
           </h3>
-          <Image src={icon} width={100} height={100} alt="Challenge Icon" />
+          <Link href={`may-project-xi.vercel.app`}>
+            <Image src={icon} width={100} height={100} alt="Challenge Icon" />
+          </Link>
         </div>
       </div>
       {/* Progress Bar Section */}
