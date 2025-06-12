@@ -5,6 +5,7 @@ import Image from "next/image";
 import icon from "@/public/icon.png";
 import { Progress } from "@/components/ui/progress";
 import { db } from "@/lib/firebase";
+import Link from "next/link";
 import {
   doc,
   getDoc,
